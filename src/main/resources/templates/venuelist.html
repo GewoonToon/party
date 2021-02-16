@@ -3,11 +3,13 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>About</title>
+    <title>Venue List</title>
 </head>
 <body>
 <div th:replace="fragments/header :: header">Header</div>
-<p th:text="${mySpecialNumber}">MySpecialNumber</p>
+<p><a th:href="@{venuedetails/De Loods}">De Loods</a></p>
+<p><a th:href="@{venuedetails/De Carré}">De Carré</a></p>
+<p><a th:href="@{venuedetails/Sportpaleis}">Sportpalies</a></p>
 
 </body>
 </html>
