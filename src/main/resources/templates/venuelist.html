@@ -7,9 +7,12 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header">Header</div>
-<p><a th:href="@{venuedetails/De Loods}">De Loods</a></p>
-<p><a th:href="@{venuedetails/De Carré}">De Carré</a></p>
-<p><a th:href="@{venuedetails/Sportpaleis}">Sportpalies</a></p>
+<div th:each="venueName : ${venueNames}">
+    <a class="buttonLook mediumButton"
+       th:href="@{|/venuedetails/${venueName}}"
+       th:text="${venueName}">Venue name</a>
+
+</div>
 
 </body>
 </html>

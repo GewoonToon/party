@@ -9,5 +9,13 @@
 <p th:text="${date}"></p>
 <p th:text="${newDate}"></p>
 
+    <p th:if="${weekend}">
+        Prettig weekend, je hebt het verdiend!
+    </p>
+
+    <p th:unless="${weekend}">
+        Voor je het weet is het weekend
+    </p>
+
 </body>
 </html>
