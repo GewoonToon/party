@@ -7,10 +7,10 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header">Header</div>
-<div th:each="venueName : ${venueNames}">
+<div th:each="venueName, iStat : ${venueNames}">
     <a class="buttonLook mediumButton"
-       th:href="@{|/venuedetails/${venueName}}"
-       th:text="${venueName}">Venue name</a>
+       th:href="@{|/venuedetails/${iStat.index}}"
+       th:text="|${venueName}|">Venue name</a>
 
 </div>
 

@@ -13,9 +13,16 @@
             <p th:each="error : ${errors}" th:text="${error}">error</p>
         </div>
 
+        <h2 th:text="${venueName}">venuedetails</h2>
+        <form th:action="@{|/venuedetails/${(index+-1)}|}">
+            <input type="submit" value="<"/>
+        </form>
 
-        <h2 th:if="${venueName}" th:text="${venueName}">venuedetails</h2>
-        <p th:unless="${venueName}">No venue was chosen</p>
+        <form th:action="@{|/venuedetails/${(index+1)}|}">
+            <input type="submit" value=">"/>
+        </form>
+
+
     </div>
 </div>
 

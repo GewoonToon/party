@@ -14,20 +14,16 @@ import java.util.Optional;
 @Controller
 public class HomeController {
 
-    final int mySpecialNumber = 729;
     private final String[] venueNames = {"De Loods", "De Club", "De Hangar", "Zapoi", "Kuub", "Cuba Libre"};
     private final DayOfWeek[] weekend = {DayOfWeek.SATURDAY, DayOfWeek.SUNDAY};
 
     @GetMapping({"/", "/home"})
     public String home(Model model){
-
-        model.addAttribute("mySpecialNumber", mySpecialNumber);
         return "home";
     }
 
     @GetMapping("/about")
     public String about(Model model){
-        model.addAttribute("mySpecialNumber", mySpecialNumber);
         return "about";
     }
 
@@ -39,11 +35,11 @@ public class HomeController {
         return "pay";
     }
 
-    @GetMapping({"/venuedetails/{venueName}", "/venuedetails"})
+    /*@GetMapping({"/venuedetails/{venueName}", "/venuedetails"})
     public String venueDetails(Model model, @PathVariable(required = false) String venueName){
-        model.addAttribute("venueName", venueName/*!=null ? venueName : "--No venue chosen--"*/);
+        model.addAttribute("venueName", venueName!=null ? venueName : "--No venue chosen--");
         return "venuedetails";
-    }
+    }*/
 
     @GetMapping("/venuelist")
     public String venueList(Model model){
@@ -59,7 +55,7 @@ public class HomeController {
         return false;
     }
 
-    @GetMapping({"/venuedetailsbyindex", "/venuedetailsbyindex/{optVenueIndex}"})
+    @GetMapping({"/venuedetails", "/venuedetails/{optVenueIndex}"})
     public String venueDetailsByIndex(Model model, @PathVariable Optional<Integer> optVenueIndex){
         String venueName = null;
         ArrayList<String> errors = new ArrayList<>();
@@ -74,6 +70,7 @@ public class HomeController {
 
         if (errors.isEmpty()){
         venueName = venueNames[venueIndex];}
+        model.addAttribute("index",venueIndex);
         model.addAttribute("errors", errors);
         model.addAttribute("venueName",venueName);
         return "venuedetails";
