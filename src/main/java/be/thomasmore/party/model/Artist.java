@@ -1,5 +1,6 @@
 package be.thomasmore.party.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -7,7 +8,9 @@ import javax.persistence.Id;
 public class Artist {
     @Id
     private int id;
-    private String artist_Name, link_More_Info, genre, bio, portfolio;
+    private String artist_Name, link_More_Info, genre,  portfolio;
+    @Column(length=500)
+    private String bio;
 
     public Artist(){}
 
