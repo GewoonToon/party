@@ -72,6 +72,7 @@ public class HomeController {
         if (errors.isEmpty() && venueRepository.findById(venueIndex).isPresent()){
             venue = venueRepository.findById(venueIndex).get();}
         model.addAttribute("index",venueIndex);
+        model.addAttribute("count",venueRepository.count());
         model.addAttribute("errors", errors);
         model.addAttribute("venue",venue);
         return "venuedetails";
