@@ -45,3 +45,17 @@ main{
     margin: auto;
 
 }
+
+.startgrid{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+
+.secondcol{
+    grid-column: 2;
+}
+
+p{
+    padding: 2px;
+}

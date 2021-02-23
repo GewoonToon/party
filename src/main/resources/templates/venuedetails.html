@@ -9,23 +9,44 @@
 <body>
 <div th:replace="fragments/header :: header">Header</div>
 <main>
-<a th:href="@{/venuelist}">Terug</a>
 <div class="row1">
-    <div class="row1content">
-        <div th:if="${errors}">
-            <p th:each="error : ${errors}" th:text="${error}">error</p>
-        </div>
+    <div th:if="${errors}">
+        <p th:each="error : ${errors}" th:text="${error}">error</p>
+    </div>
 
-        <h2 th:text="${venueName}">venuedetails</h2>
-        <form th:action="@{|/venuedetails/${(index+-1)}|}">
-            <input type="submit" value="<"/>
-        </form>
+    <div th:if="${venue!=null}">
+    <h2 th:text="${venue.getVenuename()}">venuedetails</h2>
+    <form th:action="@{|/venuedetails/${(index+-1)}|}">
+        <input type="submit" value="<"/>
+    </form>
 
-        <form th:action="@{|/venuedetails/${(index+1)}|}">
-            <input type="submit" value=">"/>
-        </form>
+    <form th:action="@{|/venuedetails/${(index+1)}|}">
+        <input type="submit" value=">"/>
+    </form>
+    <div class="startgrid">
+        <p>Link with more info: </p>
+        <p class="secondcol" th:text="${venue.getLinkmoreinfo()}">Linkmoreinfo</p>
+
+        <p>Food provided: </p>
+        <p class="secondcol" th:text="${venue.isFoodProvided()}">Food provided</p>
+
+        <p>Indoor: </p>
+        <p class="secondcol" th:text="${venue.isIndoor()}">Indoor</p>
+
+        <p>Outdoor: </p>
+        <p class="secondcol" th:text="${venue.isOutdoor()}">Outdoor</p>
+
+        <p>Free Parking: </p>
+        <p class="secondcol" th:text="${venue.isFreeParking()}">Free parking</p>
+
+        <p>City: </p>
+        <p class="secondcol" th:text="${venue.getCity()}">City</p>
+
+        <p>Distance from public transport: </p>
+        <p class="secondcol" th:text="${venue.getDistancePublicTransport()}">Distance from public transport</p>
 
 
+    </div>
     </div>
 </div>
 </main>

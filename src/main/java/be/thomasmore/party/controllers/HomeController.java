@@ -1,5 +1,8 @@
 package be.thomasmore.party.controllers;
 
+import be.thomasmore.party.model.Venue;
+import be.thomasmore.party.repositories.VenueRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +17,16 @@ import java.util.Optional;
 @Controller
 public class HomeController {
 
+    @Autowired
+    private VenueRepository venueRepository;
+
+
     private final String[] venueNames = {"De Loods", "De Club", "De Hangar", "Zapoi", "Kuub", "Cuba Libre"};
     private final DayOfWeek[] weekend = {DayOfWeek.SATURDAY, DayOfWeek.SUNDAY};
+    private final Venue[] venues = {
+            new Venue("De Loods", "link", 150, false, true, false, true, "Mechelen", 1),
+            new Venue("De club", "link",200, false, false, true, false, "Sint-Katelijne", 4 ),
+            new Venue("De hangar", "link" ,80, true, true, true, false, "Duffel", 3)};
 
     @GetMapping({"/", "/home"})
     public String home(Model model){
@@ -43,7 +54,8 @@ public class HomeController {
 
     @GetMapping("/venuelist")
     public String venueList(Model model){
-        model.addAttribute("venueNames", venueNames);
+        Iterable<Venue> venues = venueRepository.findAll();
+        model.addAttribute("venues", venues);
         return "venuelist";
     }
 
@@ -57,22 +69,22 @@ public class HomeController {
 
     @GetMapping({"/venuedetails", "/venuedetails/{optVenueIndex}"})
     public String venueDetailsByIndex(Model model, @PathVariable Optional<Integer> optVenueIndex){
-        String venueName = null;
+        Venue venue = null;
         ArrayList<String> errors = new ArrayList<>();
         int venueIndex=0;
         if(optVenueIndex.isPresent()){
             venueIndex = optVenueIndex.get();
         }
         else{errors.add("Geef een nummer");}
-        if (venueIndex<0 || venueIndex > venueNames.length-1){
+        if (venueIndex<0 || venueIndex > venues.length-1){
         errors.add("Geef een nummer dat bestaat");
     }
 
         if (errors.isEmpty()){
-        venueName = venueNames[venueIndex];}
+        venue = venues[venueIndex];}
         model.addAttribute("index",venueIndex);
         model.addAttribute("errors", errors);
-        model.addAttribute("venueName",venueName);
+        model.addAttribute("venue",venue);
         return "venuedetails";
     }
 }

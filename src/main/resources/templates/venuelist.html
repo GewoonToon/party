@@ -10,10 +10,10 @@
 <body>
 <div th:replace="fragments/header :: header">Header</div>
 <main>
-<div th:each="venueName, iStat : ${venueNames}">
+<div th:each="venue : ${venues}">
     <a class="buttonLook mediumButton"
-       th:href="@{|/venuedetails/${iStat.index}}"
-       th:text="|${venueName}|">Venue name</a>
+       th:href="@{|/venuedetails/${venueStat.index}}"
+       th:text="|${venue.getVenuename()}|">Venue name</a>
 
 </div>
 </main>
