@@ -46,6 +46,8 @@ public class HomeController {
         return "pay";
     }
 
+    /*---------------------------------------------------------------VENUEFUNCTIONS---------------------------------------------------------*/
+
     @GetMapping("/venuelist")
     public String venueList(Model model){
         Iterable<Venue> venues = venueRepository.findAll();
@@ -53,29 +55,35 @@ public class HomeController {
         return "venuelist";
     }
 
-    @GetMapping("/venuelist/outdoor/yes")
-    public String venuelistOutdoorYes(Model model){
-        Iterable<Venue> venues = venueRepository.findByOutdoor(true);
-        model.addAttribute("venues", venues);
-        return "venuelist";
-    }
+    @GetMapping({"/venuelist/outdoor/{filter}", "/venuelist/outdoor"})
+    public String venuelistOutdoorYes(Model model, @PathVariable Optional<String> filter){
+        String filterstring = "";
+        ArrayList<String> errors = new ArrayList<>();
+        Iterable<Venue> venues = null;
 
-    @GetMapping("/venuelist/outdoor/no")
-    public String venuelistOutdoorNo(Model model){
-        Iterable<Venue> venues = venueRepository.findByOutdoor(false);
-        model.addAttribute("venues", venues);
-        return "venuelist";
-    }
-
-
-
-    public boolean isWeekend(DayOfWeek[] weekend){
-        for (DayOfWeek day : weekend){
-            if (LocalDate.now().getDayOfWeek().equals(day)){return true;}
-
+        if(filter.isPresent()){
+            filterstring = filter.get();
         }
-        return false;
+
+        if(filterstring.equals("yes")){
+            venues = venueRepository.findByOutdoor(true);
+        }
+
+        else if(filterstring.equals("no")){
+            venues = venueRepository.findByOutdoor(false);
+        }
+
+        else{ errors.add("De filter is ongeldig");
+        }
+
+        model.addAttribute("venues", venues);
+        model.addAttribute("errors", errors);
+
+        return "venuelist";
     }
+
+
+
 
     @GetMapping({"/venuedetails", "/venuedetails/{id}"})
     public String venueDetailsById(Model model, @PathVariable Optional<Integer> id){
@@ -98,6 +106,8 @@ public class HomeController {
         model.addAttribute("venue",venue);
         return "venuedetails";
     }
+/*------------------------------------------------------------ARTIST FUNCTIONS------------------------------------------------------------*/
+
 
     @GetMapping("/artistlist")
     public String artistlist(Model model){
@@ -105,8 +115,6 @@ public class HomeController {
         model.addAttribute("artists", artists);
         return "artistlist";
     }
-
-
 
 
     @GetMapping({"/artistdetails", "/artistdetails/{id}"})
@@ -129,6 +137,16 @@ public class HomeController {
         model.addAttribute("errors", errors);
         model.addAttribute("artist",artist);
         return "artistdetails";
+    }
+
+/*-------------------------------------------------------------------------Other functions-----------------------------------------------------------*/
+
+    public boolean isWeekend(DayOfWeek[] weekend){
+        for (DayOfWeek day : weekend){
+            if (LocalDate.now().getDayOfWeek().equals(day)){return true;}
+
+        }
+        return false;
     }
 
 }

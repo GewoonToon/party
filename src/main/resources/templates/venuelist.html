@@ -10,8 +10,12 @@
 <body>
 <div th:replace="fragments/header :: header">Header</div>
 <main>
+    <div th:if="${errors}">
+        <p th:each="error : ${errors}" th:text="${error}">error</p>
+    </div>
+<div th:if="${venues!=null}">
     <div id="filter">
-    <p>Outdoor:
+    <p>Outdoor:</p>
     <form th:action="@{/venuelist}">
         <input type="submit" value="all">
     </form>
@@ -21,13 +25,13 @@
     <form th:action="@{/venuelist/outdoor/no}">
         <input type="submit" value="no">
     </form>
-        </p>
+
     </div>
 <div th:each="venue : ${venues}">
     <a class="buttonLook mediumButton"
        th:href="@{|/venuedetails/${venueStat.index+1}}"
        th:text="|${venue.getVenuename()}|">Venue name</a>
-
+</div>
 </div>
 </main>
 </body>
