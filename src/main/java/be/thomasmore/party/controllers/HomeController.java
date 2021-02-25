@@ -55,9 +55,35 @@ public class HomeController {
         return "venuelist";
     }
 
+    @GetMapping({"/venuedetails", "/venuedetails/{id}"})
+    public String venueDetailsById(Model model, @PathVariable Optional<Integer> id){
+        Venue venue = null;
+        ArrayList<String> errors = new ArrayList<>();
+        int venueIndex=1;
+        if(id.isPresent()){
+            venueIndex = id.get();
+        }
+        else{errors.add("Geef een nummer");}
+        if (venueIndex<1 || venueIndex > venueRepository.count()){
+            errors.add("Geef een nummer dat bestaat");
+        }
+
+        if (errors.isEmpty() && venueRepository.findById(venueIndex).isPresent()){
+            venue = venueRepository.findById(venueIndex).get();}
+
+
+        model.addAttribute("index",venueIndex);
+        model.addAttribute("count",venueRepository.count());
+        model.addAttribute("errors", errors);
+        model.addAttribute("venue",venue);
+        return "venuedetails";
+    }
+
+    /*--------------------------------------------------------VENUEFILTERS----------------------------------------------------------------------------*/
+
     @GetMapping({"/venuelist/outdoor/{filter}", "/venuelist/outdoor"})
-    public String venuelistOutdoorYes(Model model, @PathVariable Optional<String> filter){
-        String filterstring = "";
+    public String venuelistOutdoor(Model model, @PathVariable Optional<String> filter){
+        String filterstring = "all";
         ArrayList<String> errors = new ArrayList<>();
         Iterable<Venue> venues = null;
 
@@ -78,6 +104,68 @@ public class HomeController {
 
         model.addAttribute("venues", venues);
         model.addAttribute("errors", errors);
+        model.addAttribute("filtero", filterstring);
+
+        return "venuelist";
+    }
+
+
+    @GetMapping({"/venuelist/indoor/{filter}", "/venuelist/indoor"})
+    public String venuelistindoor(Model model, @PathVariable Optional<String> filter){
+        String filterstring = "";
+        ArrayList<String> errors = new ArrayList<>();
+        Iterable<Venue> venues = null;
+
+        if(filter.isPresent()){
+            filterstring = filter.get();
+        }
+
+        if(filterstring.equals("yes")){
+            venues = venueRepository.findByIndoor(true);
+        }
+
+        else if(filterstring.equals("no")){
+            venues = venueRepository.findByIndoor(false);
+        }
+
+        else{ errors.add("De filter is ongeldig");
+        }
+
+        model.addAttribute("venues", venues);
+        model.addAttribute("errors", errors);
+        model.addAttribute("filteri", filterstring);
+
+        return "venuelist";
+    }
+
+    @GetMapping({"/venuelist/size/{filter}", "/venuelist/size"})
+    public String venuelistsize(Model model, @PathVariable Optional<String> filter){
+        String filterstring = "";
+        ArrayList<String> errors = new ArrayList<>();
+        Iterable<Venue> venues = null;
+
+        if(filter.isPresent()){
+            filterstring = filter.get();
+        }
+
+        if(filterstring.equals("S")){
+            venues = venueRepository.capacityBetween(0,200);
+        }
+
+        else if(filterstring.equals("M")){
+            venues = venueRepository.capacityBetween(200,500);
+        }
+
+        else if(filterstring.equals("L")){
+            venues = venueRepository.capacityGreaterThan(600);
+        }
+
+        else{ errors.add("De filter is ongeldig");
+        }
+
+        model.addAttribute("venues", venues);
+        model.addAttribute("errors", errors);
+        model.addAttribute("filters", filterstring);
 
         return "venuelist";
     }
@@ -85,27 +173,7 @@ public class HomeController {
 
 
 
-    @GetMapping({"/venuedetails", "/venuedetails/{id}"})
-    public String venueDetailsById(Model model, @PathVariable Optional<Integer> id){
-        Venue venue = null;
-        ArrayList<String> errors = new ArrayList<>();
-        int venueIndex=1;
-        if(id.isPresent()){
-            venueIndex = id.get();
-        }
-        else{errors.add("Geef een nummer");}
-        if (venueIndex<1 || venueIndex > venueRepository.count()){
-            errors.add("Geef een nummer dat bestaat");
-        }
 
-        if (errors.isEmpty() && venueRepository.findById(venueIndex).isPresent()){
-            venue = venueRepository.findById(venueIndex).get();}
-        model.addAttribute("index",venueIndex);
-        model.addAttribute("count",venueRepository.count());
-        model.addAttribute("errors", errors);
-        model.addAttribute("venue",venue);
-        return "venuedetails";
-    }
 /*------------------------------------------------------------ARTIST FUNCTIONS------------------------------------------------------------*/
 
 
@@ -132,6 +200,8 @@ public class HomeController {
 
         if (errors.isEmpty() && artistRepository.findById(artistIndex).isPresent()){
             artist = artistRepository.findById(artistIndex).get();}
+
+
         model.addAttribute("index",artistIndex);
         model.addAttribute("count",artistRepository.count());
         model.addAttribute("errors", errors);

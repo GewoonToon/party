@@ -29,6 +29,10 @@ public class Venue {
 
     }
 
+    public int getCapacity() {
+        return capacity;
+    }
+
     public void setLinkmoreinfo(String linkmoreinfo) {
         this.link_more_info = linkmoreinfo;
     }

@@ -10,7 +10,7 @@ h1, h2{
 
 nav ul {
     display: flex;
-    width: 800px;
+    width: 640px;
     margin: auto;
     height: 50px;
 }
@@ -60,6 +60,15 @@ p{
     padding: 2px;
 }
 
-#filter{
+.filter{
     display: flex;
+}
+
+.active{
+    background-color: green;
+    color: white;
+}
+
+.notactive{
+
 }
