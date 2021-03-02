@@ -68,8 +68,10 @@ public class HomeController {
             errors.add("Geef een nummer dat bestaat");
         }
 
-        if (errors.isEmpty() && venueRepository.findById(venueIndex).isPresent()){
-            venue = venueRepository.findById(venueIndex).get();}
+        Optional<Venue> optionalVenue = venueRepository.findById(venueIndex);
+
+        if (errors.isEmpty() && optionalVenue.isPresent()){
+            venue = optionalVenue.get();}
 
 
         model.addAttribute("index",venueIndex);
@@ -198,8 +200,10 @@ public class HomeController {
             errors.add("Geef een nummer dat bestaat");
         }
 
-        if (errors.isEmpty() && artistRepository.findById(artistIndex).isPresent()){
-            artist = artistRepository.findById(artistIndex).get();}
+        Optional<Artist> optionalArtist = artistRepository.findById(artistIndex);
+
+        if (errors.isEmpty() && optionalArtist.isPresent()){
+            artist = optionalArtist.get();}
 
 
         model.addAttribute("index",artistIndex);
