@@ -28,7 +28,7 @@ public class VenueController {
         }
         else{errors.add("Geef een filter");}
 
-
+        model.addAttribute("count", venueRepository.count());
         model.addAttribute("filter", filter);
         model.addAttribute("venues", venues);
         model.addAttribute("errors", errors);

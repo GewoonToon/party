@@ -9,8 +9,9 @@
 <body>
 <div th:replace="fragments/header :: header">Header</div>
 <div th:if="${venues!=null}">
+    <h2 th:text="${count}+' venues found'"></h2>
     <div th:if="${filter}" class="filter">
-        <a th:href="@{.}">/\</a>
+        <a th:href="@{/venuelist}">/\</a>
 
         <p>Outdoor: </p>
 
@@ -19,18 +20,17 @@
         <p>Indoor: </p>
 
     </div>
-    <a th:unless="${filter}" class="prevnextbuttons" th:classappend="filter" th:href="@{filter}">\/</a>
+    <a th:unless="${filter}" class="prevnextbuttons" th:classappend="filter" th:href="@{/venuelist/filter}">\/</a>
 <main>
-
-
 
 
 <div th:each="venue : ${venues}">
     <a class="buttonLook mediumButton"
        th:href="@{|/venuedetails/${venue.getId()}}"
-       th:text="|${venue.getVenuename()}|">Venue name</a>
-</div>
+       th:text="${venue.getVenuename()}+${venue.getCapacity()}">Venue name</a>
+
 </div>
 </main>
+</div>
 </body>
 </html>
