@@ -2,6 +2,8 @@ package be.thomasmore.party.controllers;
 
 import be.thomasmore.party.model.Venue;
 import be.thomasmore.party.repositories.VenueRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +18,10 @@ public class VenueController {
 
     @Autowired
     private VenueRepository venueRepository;
+
+    private Logger logger = LoggerFactory.getLogger(VenueController.class);
     /*---------------------------------------------------------------VENUEFUNCTIONS---------------------------------------------------------*/
+
 
     @GetMapping({"/venuelist", "/venuelist/{optfilter}"})
     public String venueList(Model model, @PathVariable Optional<String> optfilter){
