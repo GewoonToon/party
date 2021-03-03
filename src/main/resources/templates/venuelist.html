@@ -6,54 +6,18 @@
     <meta charset="UTF-8">
     <title>Venue List</title>
 </head>
-
 <body>
 <div th:replace="fragments/header :: header">Header</div>
 <main>
-    <div th:if="${errors}">
-        <p th:each="error : ${errors}" th:text="${error}">error</p>
-    </div>
+
 <div th:if="${venues!=null}">
-    <div class="filter">
-    <p>Outdoor: </p>
-    <form  th:action="@{/venuelist}">
-        <input th:class="${filtero==null || (!filtero.equals('yes') && !filtero.equals('no'))} ? active : notactive" type="submit" value="all">
-    </form>
-    <form th:action="@{/venuelist/outdoor/yes}">
-        <input th:class="${filtero!=null && filtero.equals('yes')} ? active : notactive" type="submit" value="yes">
-    </form>
-    <form th:action="@{/venuelist/outdoor/no}">
-        <input th:class="${filtero!=null && filtero.equals('no')} ? active : notactive" type="submit" value="no">
-    </form>
-    </div>
+    <div th:if="${filter}" class="filter">
+        <p>Outdoor: </p>
 
-    <div class="filter">
         <p>Indoor: </p>
-        <form th:action="@{/venuelist}">
-            <input th:class="${filteri==null || (!filteri.equals('yes') && !filteri.equals('no'))} ? active : notactive" type="submit" value="all">
-        </form>
-        <form th:action="@{/venuelist/indoor/yes}">
-            <input th:class="${filteri!=null && filteri.equals('yes')} ? active : notactive" type="submit" value="yes">
-        </form>
-        <form th:action="@{/venuelist/indoor/no}">
-            <input th:class="${filteri!=null && filteri.equals('no')} ? active : notactive" type="submit" value="no">
-        </form>
-    </div>
 
-    <div class="filter">
         <p>Indoor: </p>
-        <form th:action="@{/venuelist}">
-            <input th:class="${filters==null || (!filters.equals('S') && !filters.equals('M') && !filters.equals('L'))} ? active : notactive" type="submit" value="all">
-        </form>
-        <form th:action="@{/venuelist/size/S}">
-            <input th:class="${filters!=null && filters.equals('S')} ? active : notactive" type="submit" value="S">
-        </form>
-        <form th:action="@{/venuelist/size/M}">
-            <input th:class="${filters!=null && filters.equals('M')} ? active : notactive" type="submit" value="M">
-        </form>
-        <form th:action="@{/venuelist/size/L}">
-            <input th:class="${filters!=null && filters.equals('L')} ? active : notactive" type="submit" value="L">
-        </form>
+
     </div>
 
 

@@ -17,22 +17,22 @@
         <div th:if="${artist!=null}">
             <h2 th:text="${artist.getArtistName()}">venuedetails</h2>
 <div id="filter">
-            <form th:if="${index==1}" th:action="@{|/artistdetails/${count}|}">
-                <input type="submit" value="<"/>
-            </form>
+            <div th:if="${index==1}" >
+                <a th:href="@{|/artistdetails/${count}|}"><</a>
+            </div>
 
-            <form  th:if="${index!=1}" th:action="@{|/artistdetails/${(index+-1)}|}">
-                <input type="submit" value="<"/>
-            </form>
+            <div  th:if="${index!=1}" >
+                <a th:href="@{|/artistdetails/${(index+-1)}|}"><</a>
+            </div>
 
 
 
-            <form th:if="${count==index}" th:action="@{|/artistdetails/1|}">
-                <input type="submit" value=">"/>
-            </form>
-            <form th:if="${count!=index}" th:action="@{|/artistdetails/${(index+1)}|}">
-                <input type="submit" value=">"/>
-            </form>
+            <div th:if="${count==index}" >
+                <a th:href="@{|/artistdetails/1|}">></a>
+            </div>
+            <div th:if="${count!=index}">
+                <a  th:href="@{|/artistdetails/${(index+1)}|}">></a>
+            </div>
 </div>
 
             <div class="startgrid">
