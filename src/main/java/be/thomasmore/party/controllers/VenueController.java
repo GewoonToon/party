@@ -25,8 +25,13 @@ public class VenueController {
 
 
     @GetMapping({"/venuelist", "/venuelist/{optfilter}"})
-    public String venueList(Model model, @PathVariable Optional<String> optfilter, @RequestParam(required=false) Integer minCapacity){
+    public String venueList(Model model, @PathVariable Optional<String> optfilter,
+                            @RequestParam(required=false) Integer minCapacity,
+                            @RequestParam(required=false) Integer maxCapacity){
+
+
         logger.info(String.format("venueList -- min=%d", minCapacity));
+        logger.info(String.format("venueLise -- max=%d", maxCapacity));
         ArrayList<String> errors = new ArrayList<>();
         ArrayList<Venue> venuesfilter = new ArrayList<>();
         boolean filter = false;
@@ -42,7 +47,13 @@ public class VenueController {
             venuesfilter.removeIf(venue -> venue.getCapacity() < minCapacity);
             model.addAttribute("min", minCapacity);
         }
-        else{model.addAttribute("min", 0);}
+        else{model.addAttribute("min", null);}
+
+        if(maxCapacity!=null){
+            venuesfilter.removeIf(venue -> venue.getCapacity()> maxCapacity);
+            model.addAttribute("max", maxCapacity);
+        }
+        else{model.addAttribute("max",null);}
 
 
         model.addAttribute("count", venueRepository.count());
@@ -50,6 +61,7 @@ public class VenueController {
         model.addAttribute("venues", venuesfilter);
         model.addAttribute("errors", errors);
         return "venuelist";
+
     }
 
     @GetMapping({"/venuedetails", "/venuedetails/{id}"})
