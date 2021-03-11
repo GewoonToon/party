@@ -52,10 +52,13 @@
 <main>
 
 <div th:each="venue : ${venues}">
+    <div>
     <a class="buttonLook mediumButton"
        th:href="@{|/venuedetails/${venue.getId()}}"
-       th:text="${venue.getVenuename()}+${venue.getCapacity()}">Venue name</a>
+       ><span th:text="${venue.getVenuename()}"></span>
+        <div th:text="|capacity ${venue.capacity}|" class="venueExtraInfo">maxNrOfPersons</div></a>
 
+    </div>
 </div>
 </main>
 </div>
