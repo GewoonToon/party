@@ -17,9 +17,11 @@ public class Party {
     Date doors;
     @ManyToOne(fetch = FetchType.LAZY)
     private Venue venue;
-
     @ManyToMany(fetch = FetchType.LAZY)
     private Collection<Artist> artists;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Collection<Animal> animals;
 
     public Party(){}
 
@@ -63,5 +65,13 @@ public class Party {
 
     public Venue getVenue() {
         return venue;
+    }
+
+    public Collection<Artist> getArtists() {
+        return artists;
+    }
+
+    public Collection<Animal> getAnimals() {
+        return animals;
     }
 }

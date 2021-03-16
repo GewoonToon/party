@@ -1,0 +1,61 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/stylesheets :: stylesheet"></div>
+    <meta charset="UTF-8">
+    <title>Venue Details</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header">Header</div>
+<main>
+    <div class="row1">
+        <div th:if="${errors}">
+            <p th:each="error : ${errors}" th:text="${error}">error</p>
+        </div>
+
+        <div th:if="${animal!=null}">
+            <h2 th:text="${animal.name}">venuedetails</h2>
+            <div class="prevnextbuttons">
+                <div th:if="${index==1}" >
+                    <a th:href="@{|/venuedetails/${count}|}"><</a>
+                </div>
+
+                <div  th:if="${index!=1}">
+                    <a th:href="@{|/venuedetails/${(index+-1)}|}"><</a>
+                </div>
+
+
+
+                <div th:if="${count==index}" >
+                    <a th:href="@{|/venuedetails/1|}">></a>
+                </div>
+                <div th:if="${count!=index}">
+                    <a th:href="@{|/venuedetails/${(index+1)}|}">></a>
+                </div>
+            </div>
+
+            <div class="startgrid">
+                <p>City: </p>
+                <p class="secondcol" th:text="${animal.city}">City</p>
+
+                <p>Bio: </p>
+                <p class="secondcol" th:text="${animal.bio}">Food provided</p>
+
+
+
+            </div>
+
+            <div th:if="${!animal.parties.isEmpty()}">
+                <h2>Gaat naar: </h2>
+                <div th:each="party : ${animal.parties}">
+                    <a class="buttonLook mediumButton"
+                       th:href="@{|/partydetails/${party.id}}"
+                       th:text="|${party.name}|">Party name</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

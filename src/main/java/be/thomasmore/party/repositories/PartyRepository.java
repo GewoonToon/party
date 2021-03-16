@@ -12,4 +12,5 @@ public interface PartyRepository extends CrudRepository<Party, Integer> {
     @Query("SELECT p from Party p where :venue is null or p.venue = :venue")
     Iterable<Party> findByVenue(@Param("venue") Venue venue);
 
+
 }

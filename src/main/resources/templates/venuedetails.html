@@ -62,10 +62,14 @@
 
 
     </div>
+
+        <div th:if="${parties}">
+            <h2>Parties: </h2>
         <div th:each="party : ${parties}">
             <a class="buttonLook mediumButton"
                th:href="@{|/partydetails/${party.getId()}}"
                th:text="|${party.getName()}|">Party name</a>
+        </div>
         </div>
     </div>
 </div>

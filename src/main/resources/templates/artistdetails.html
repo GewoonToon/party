@@ -48,9 +48,15 @@
                 <p>Portfolio: </p>
                 <p class="secondcol" th:text="${artist.portfolio}">Portfolio</p>
 
+            </div>
 
-
-
+            <div th:if="${!artist.parties.isEmpty()}">
+                <h2>Going to: </h2>
+            <div th:each="party : ${artist.parties}">
+                <a class="buttonLook mediumButton"
+                   th:href="@{|/partydetails/${party.id}}"
+                   th:text="|${party.name}|">Party name</a>
+            </div>
             </div>
         </div>
     </div>

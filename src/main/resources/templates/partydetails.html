@@ -50,6 +50,24 @@
                 <p th:if="${!party.extra_info.trim().isEmpty()}" th:text="${party.extra_info}" class="secondcol">Extra info</p>
 
             </div>
+
+            <div th:if="${!party.artists.isEmpty()}">
+                <h2>Line up: </h2>
+            <div th:each="artist : ${party.artists}">
+                <a class="buttonLook mediumButton"
+                   th:href="@{|/artistdetails/${artist.id}}"
+                   th:text="|${artist.artistName}|">Artist name</a>
+            </div>
+            </div>
+
+            <div th:if="${!party.animals.isEmpty()}">
+                <h2>Animals: </h2>
+                <div th:each="animal : ${party.animals}">
+                    <a class="buttonLook mediumButton"
+                       th:href="@{|/animaldetails/${animal.id}}"
+                       th:text="|${animal.name}|">Animal name</a>
+                </div>
+            </div>
         </div>
     </div>
 </main>
