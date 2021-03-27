@@ -14,20 +14,27 @@
             <p th:each="error : ${errors}" th:text="${error}">error</p>
         </div>
 
-        <div th:if="${party!=null}">
-            <h2 th:text="${party.name}">Partydetails</h2>
+        <div th:if="${party!=null}"  th:object="${party}">
+            <h2 th:text="*{name}">Partydetails</h2>
 <form th:action="@{|/admin/partyedit/${party.id}|}" method="post">
             <div class="startgrid">
 
                 <label for="name" class="firstcol">Name: </label>
-                <input class="secondcol inputfield" type="text" id="name" name="name" th:value="${party.name}">
+                <input class="secondcol inputfield" type="text" id="name" th:field="*{name}">
 
                 <label for="pricepre" class="firstcol">Price presale: </label>
-                <input class="secondcol inputfield" type="number" id="pricepre" name="pricepre" th:value="${party.price_Presale_In_Eur}">
+                <input class="secondcol inputfield" type="number" id="pricepre" th:field="*{price_Presale_In_Eur}">
 
                 <label for="price" class="firstcol">Price: </label>
-                <input class="secondcol inputfield" type="number" id="price" name="price" th:value="${party.price_In_Eur}">
+                <input class="secondcol inputfield" type="number" id="price" th:field="*{price_In_Eur}">
 
+                <label for="extraInfo" class="firstcol">Extra info: </label>
+                <input class="secondcol inputfield" type="text" id="extraInfo" th:field="*{extra_info}">
+
+                <p class="firstcol">Venue: </p>
+                <select  id="venueId" class="secondcol" name="venueId">
+                    <option th:each="venue : ${venues}" th:value="${venue.id}" th:text="${venue.venuename}" th:selected="${party.venue.id==venue.id}"></option>
+                </select>
 
 
             </div>

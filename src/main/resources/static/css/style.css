@@ -67,7 +67,8 @@ p,label{
     float: left;
 }
 
-.prevnextbuttons{display:flex;}
+.prevnextbuttons{display:flex;
+justify-content: space-between;}
 
 .active{
     background-color: green;
@@ -83,6 +84,7 @@ a.buttonLook {
     color: black;
     text-decoration: none;
     text-align: center;
+
 }
 
 a.buttonLook:hover {
@@ -106,6 +108,6 @@ a.smallButton {
     padding: 0.2em;
 }
 
-.inputfield{
+.inputfield, option, select{
     width: 30%;
 }

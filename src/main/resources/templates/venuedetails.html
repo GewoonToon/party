@@ -14,8 +14,8 @@
         <p th:each="error : ${errors}" th:text="${error}">error</p>
     </div>
 
-    <div th:if="${venue!=null}">
-    <h2 th:text="${venue.venuename}">venuedetails</h2>
+    <div th:if="${venue!=null}" th:object="${venue}">
+    <h2 th:text="*{venuename}">venuedetails</h2>
 <div class="prevnextbuttons">
             <div th:if="${index==1}" >
                 <a th:href="@{|/venuedetails/${count}|}"><</a>
@@ -37,28 +37,28 @@
 
     <div class="startgrid">
         <p>Link with more info: </p>
-        <p class="secondcol" th:text="${venue.linkmoreinfo}">Linkmoreinfo</p>
+        <p class="secondcol" th:text="*{linkmoreinfo}">Linkmoreinfo</p>
 
         <p>Food provided: </p>
-        <p class="secondcol" th:text="${venue.isFoodProvided()}">Food provided</p>
+        <p class="secondcol" th:text="*{isFoodProvided()}">Food provided</p>
 
         <p>Capacity: </p>
-        <p class="secondcol" th:text="${venue.capacity}">Capacity</p>
+        <p class="secondcol" th:text="*{capacity}">Capacity</p>
 
         <p>Indoor: </p>
-        <p class="secondcol" th:text="${venue.isIndoor()}">Indoor</p>
+        <p class="secondcol" th:text="*{isIndoor()}">Indoor</p>
 
         <p>Outdoor: </p>
-        <p class="secondcol" th:text="${venue.isOutdoor()}">Outdoor</p>
+        <p class="secondcol" th:text="*{isOutdoor()}">Outdoor</p>
 
         <p>Free Parking: </p>
-        <p class="secondcol" th:text="${venue.isFreeParking()}">Free parking</p>
+        <p class="secondcol" th:text="*{isFreeParking()}">Free parking</p>
 
         <p>City: </p>
-        <p class="secondcol" th:text="${venue.getCity()}">City</p>
+        <p class="secondcol" th:text="*{city}">City</p>
 
         <p>Distance from public transport: </p>
-        <p class="secondcol" th:text="${venue.getDistancePublicTransport()}">Distance from public transport</p>
+        <p class="secondcol" th:text="*{distancePublicTransport}">Distance from public transport</p>
 
 
     </div>

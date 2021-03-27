@@ -1,5 +1,6 @@
 package be.thomasmore.party.controllers;
 
+import be.thomasmore.party.model.Party;
 import be.thomasmore.party.model.Venue;
 import be.thomasmore.party.repositories.PartyRepository;
 import be.thomasmore.party.repositories.VenueRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -25,6 +27,7 @@ public class VenueController {
     private PartyRepository partyRepository;
 
     private Logger logger = LoggerFactory.getLogger(VenueController.class);
+    private Integer id;
     /*---------------------------------------------------------------VENUEFUNCTIONS---------------------------------------------------------*/
 
 
@@ -78,8 +81,8 @@ public class VenueController {
     }
 
     @GetMapping({"/venuedetails", "/venuedetails/{id}"})
-    public String venueDetailsById(Model model, @PathVariable Optional<Integer> id){
-        Venue venue = null;
+    public String venueDetailsById(Model model, @PathVariable Optional<Integer> id,
+                                   @ModelAttribute Venue venue){
         ArrayList<String> errors = new ArrayList<>();
         int venueIndex=1;
         if(id.isPresent()){
@@ -90,18 +93,30 @@ public class VenueController {
             errors.add("Geef een nummer tussen 1 en " + venueRepository.count());
         }
 
-        Optional<Venue> optionalVenue = venueRepository.findById(venueIndex);
-
-        if (errors.isEmpty() && optionalVenue.isPresent()){
-            venue = optionalVenue.get();}
-
         model.addAttribute("parties", partyRepository.findByVenue(venue));
         model.addAttribute("index",venueIndex);
         model.addAttribute("count",venueRepository.count());
         model.addAttribute("errors", errors);
-        model.addAttribute("venue",venue);
         return "venuedetails";
     }
+
+    @ModelAttribute("venue")
+    public Venue findVenue(@PathVariable(required = false) Integer id){
+        if(id==null){return null;}
+        Optional<Venue> optionalVenue = venueRepository.findById(id);
+        if(optionalVenue.isPresent()){
+            return optionalVenue.get();
+        }
+        return null;
+    }
+
+    /*@ModelAttribute("venues")
+    public ArrayList<Venue> findVenues(@PathVariable String filter){
+
+        if(filter.isEmpty()){
+            return
+        }
+    }*/
 
     /*--------------------------------------------------------VENUEFILTERS----------------------------------------------------------------------------*/
 

@@ -35,6 +35,10 @@ public class Party {
         this.doors = doors;
     }
 
+    public void setVenue(Venue venue) {
+        this.venue = venue;
+    }
+
     public int getId() {
         return id;
     }
